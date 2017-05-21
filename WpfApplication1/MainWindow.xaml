@@ -1,0 +1,31 @@
+﻿<Window x:Class="WpfApplication1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApplication1"
+        xmlns:vm ="clr-namespace:WpfApplication1.ViewModels"
+        xmlns:m ="clr-namespace:WpfApplication1.Models"
+        xmlns:converers ="clr-namespace:WpfApplication1.Converters"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Window.Resources>
+        <m:Person x:Key="person"/>
+        <converers:BackgroundConverter x:Key="converter"/>
+        <vm:ViewModelBase x:Key="viewModel"/>
+    </Window.Resources>
+    <Grid x:Name="grid"
+          DataContext="{Binding Source={StaticResource person}}"
+          Background="{Binding Gender, Converter= {StaticResource converter}}">
+        <StackPanel>
+            <TextBox Text="{Binding LastName, Mode=TwoWay}"></TextBox>
+            <Button Content="Simple Command" 
+                    Command ="{Binding SimpleCommand, Source={StaticResource viewModel}}">
+
+            </Button>
+            <Button Content="Parameter Command" 
+                    Command="{Binding ParameterCommand, Source={StaticResource viewModel}}" 
+                    CommandParameter="{Binding LastName}"></Button>
+        </StackPanel>
+    </Grid>
+</Window>
